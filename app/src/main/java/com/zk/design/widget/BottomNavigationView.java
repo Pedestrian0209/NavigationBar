@@ -132,15 +132,15 @@ public class BottomNavigationView extends LinearLayout implements View.OnClickLi
         if (currentFragment != null) {
             int curIndex = fragments.indexOf(currentFragment);
             ((BottomNavigationItemView) getChildAt(curIndex)).setActive(false);
-            if (fragmentManager.findFragmentByTag(String.valueOf(curIndex)) != null) {
+            if (((Fragment) currentFragment).isAdded()) {
                 transaction.hide((Fragment) currentFragment);
             }
         }
         ((BottomNavigationItemView) getChildAt(index)).setActive(true);
-        if (fragmentManager.findFragmentByTag(String.valueOf(index)) != null) {
+        if (((Fragment) nextFragment).isAdded()) {
             transaction.show((Fragment) nextFragment);
         } else {
-            transaction.add(containerId, (Fragment) nextFragment, String.valueOf(index));
+            transaction.add(containerId, (Fragment) nextFragment);
         }
         curIndex = index;
         transaction.commit();
