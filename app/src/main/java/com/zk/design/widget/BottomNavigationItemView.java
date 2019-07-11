@@ -33,7 +33,7 @@ public class BottomNavigationItemView extends View {
     private boolean showTipDot;
     private String tipMessage;
 
-    public BottomNavigationItemView(Builder builder) {
+    private BottomNavigationItemView(Builder builder) {
         super(builder.context);
         title = builder.title;
         activeTextSize = builder.activeTextSize;
@@ -81,7 +81,7 @@ public class BottomNavigationItemView extends View {
             paint = new Paint();
         }
         paint.setAntiAlias(true);
-
+        //绘制图片
         int iconWidth = isActive ? (activeIcon == null ? 0 : activeIcon.getIntrinsicWidth())
                 : (inActiveIcon == null ? 0 : inActiveIcon.getIntrinsicWidth());
         int iconHeight = isActive ? (activeIcon == null ? 0 : activeIcon.getIntrinsicHeight())
@@ -93,7 +93,7 @@ public class BottomNavigationItemView extends View {
                     (getWidth() + iconWidth) / 2, activeItemPaddingTop + iconHeight);
             icon.draw(canvas);
         }
-
+        //绘制标题
         if (!TextUtils.isEmpty(title)) {
             paint.setTextSize(isActive ? activeTextSize : inActiveTextSize);
             paint.setColor(isActive ? activeTextColor : inActiveTextColor);
@@ -103,13 +103,13 @@ public class BottomNavigationItemView extends View {
             canvas.drawText(title, (getWidth() - titleWidth) / 2,
                     getHeight() - (isActive ? activeItemPaddingBottom : inActiveItemPaddingBottom) - metrics.bottom, paint);
         }
-
+        //绘制圆点提示
         if (showTipDot) {
             paint.setColor(tipBgColor);
             canvas.drawCircle((getWidth() + iconWidth) / 2 - tipMarginLeft + tipDotRadius,
                     (isActive ? activeItemPaddingTop : inActiveItemPaddingTop) + tipMarginTop + tipDotRadius, tipDotRadius, paint);
         }
-
+        //绘制文字提示
         if (!TextUtils.isEmpty(tipMessage)) {
             paint.setColor(tipBgColor);
             paint.setTextSize(tipTextSize);

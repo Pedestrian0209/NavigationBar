@@ -31,8 +31,11 @@ public class BottomNavigationView extends LinearLayout implements View.OnClickLi
     private int activeItemPaddingTop, inActiveItemPaddingTop, activeItemPaddingBottom, inActiveItemPaddingBottom;
     //导航栏item上的提示（点/数字/文字等）的位置，以item的图片的右边距和上边距为准
     private int tipMarginLeft, tipMarginTop;
+    //导航栏item上的提示文字的大小
     private int tipTextSize;
+    //导航栏item上的提示文字的颜色
     private int tipTextColor;
+    //导航栏item上的提示文字或点的背景颜色
     private int tipBgColor;
     //导航栏item上的提示为文字时的背景圆角半径 为圆点时的圆点半径
     private int tipBgCornerRadius, tipDotRadius;
