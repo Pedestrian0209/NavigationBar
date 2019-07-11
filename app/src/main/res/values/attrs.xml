@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BottomNavigationView">
+        <attr name="activeTextSize" format="dimension" />
+        <attr name="inActiveTextSize" format="dimension" />
+        <attr name="activeTextColor" format="color" />
+        <attr name="inActiveTextColor" format="color" />
+        <attr name="activeItemPaddingTop" format="dimension" />
+        <attr name="inActiveItemPaddingTop" format="dimension" />
+        <attr name="activeItemPaddingBottom" format="dimension" />
+        <attr name="inActiveItemPaddingBottom" format="dimension" />
+        <!-- 导航栏item上的提示（点/数字/文字等）的位置，以item的图片的右边距为准 -->
+        <attr name="tipMarginLeft" format="dimension" />
+        <!-- 导航栏item上的提示（点/数字/文字等）的位置，以item的图片的上边距为准 -->
+        <attr name="tipMarginTop" format="dimension" />
+        <attr name="tipTextSize" format="dimension" />
+        <attr name="tipTextColor" format="color" />
+        <attr name="tipBgColor" format="color" />
+        <!-- 导航栏item上的提示为文字时的背景圆角半径-->
+        <attr name="tipBgCornerRadius" format="dimension" />
+        <!-- 导航栏item上的提示为圆点时的圆点半径-->
+        <attr name="tipDotRadius" format="dimension" />
+    </declare-styleable>
+</resources>

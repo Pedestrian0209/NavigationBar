@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <com.zk.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="?android:attr/windowBackground"
+        app:activeItemPaddingBottom="5dp"
+        app:activeItemPaddingTop="5dp"
+        app:activeTextColor="@color/blue"
+        app:activeTextSize="12dp"
+        app:inActiveTextColor="@color/black"
+        app:tipBgColor="@color/red"
+        app:tipBgCornerRadius="6dp"
+        app:tipDotRadius="3dp"
+        app:tipMarginLeft="5dp"
+        app:tipMarginTop="-1dp"
+        app:tipTextColor="@android:color/white"
+        app:tipTextSize="8dp" />
+
+</LinearLayout>
