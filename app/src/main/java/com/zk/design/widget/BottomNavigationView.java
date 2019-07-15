@@ -2,10 +2,13 @@ package com.zk.design.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.AttributeSet;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -71,6 +74,7 @@ public class BottomNavigationView extends LinearLayout implements View.OnClickLi
         this.containerId = containerId;
         this.fragments = fragments;
         initItemViews();
+        switchFragment(0);
     }
 
     /**
@@ -105,7 +109,6 @@ public class BottomNavigationView extends LinearLayout implements View.OnClickLi
             itemView.setOnClickListener(this);
             addView(itemView);
         }
-        switchFragment(0);
     }
 
     public void switchFragment(int index) {
@@ -142,7 +145,7 @@ public class BottomNavigationView extends LinearLayout implements View.OnClickLi
         if (((Fragment) nextFragment).isAdded()) {
             transaction.show((Fragment) nextFragment);
         } else {
-            transaction.add(containerId, (Fragment) nextFragment);
+            transaction.add(containerId, (Fragment) nextFragment, nextFragment.getClass().getSimpleName());
         }
         curIndex = index;
         transaction.commit();
@@ -167,5 +170,80 @@ public class BottomNavigationView extends LinearLayout implements View.OnClickLi
         }
 
         ((BottomNavigationItemView) getChildAt(index)).showTipDot(showTipDot);
+    }
+
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        Parcelable superState = super.onSaveInstanceState();
+        SavedState savedState = new SavedState(superState);
+        savedState.childrenStates = new SparseArray();
+        savedState.curIndex = curIndex;
+        for (int i = 0; i < getChildCount(); i++) {
+            getChildAt(i).saveHierarchyState(savedState.childrenStates);
+        }
+        return savedState;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        SavedState savedState = (SavedState) state;
+        super.onRestoreInstanceState(savedState.getSuperState());
+        for (int i = 0; i < getChildCount(); i++) {
+            getChildAt(i).restoreHierarchyState(savedState.childrenStates);
+        }
+        switchFragment(savedState.curIndex);
+    }
+
+    @Override
+    protected void dispatchSaveInstanceState(SparseArray<Parcelable> container) {
+        dispatchFreezeSelfOnly(container);
+    }
+
+    @Override
+    protected void dispatchRestoreInstanceState(SparseArray<Parcelable> container) {
+        dispatchThawSelfOnly(container);
+    }
+
+    public static class SavedState extends BaseSavedState {
+        SparseArray childrenStates;
+        int curIndex;
+
+        public SavedState(Parcel source) {
+            super(source);
+        }
+
+        private SavedState(Parcel source, ClassLoader loader) {
+            super(source);
+            childrenStates = source.readSparseArray(loader);
+            curIndex = source.readInt();
+        }
+
+        public SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeSparseArray(childrenStates);
+            out.writeInt(curIndex);
+        }
+
+        public static final ClassLoaderCreator<SavedState> CREATOR = new ClassLoaderCreator<SavedState>() {
+            @Override
+            public SavedState createFromParcel(Parcel source, ClassLoader loader) {
+                return new SavedState(source, loader);
+            }
+
+            @Override
+            public SavedState createFromParcel(Parcel source) {
+                return new SavedState(source);
+            }
+
+            @Override
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
     }
 }

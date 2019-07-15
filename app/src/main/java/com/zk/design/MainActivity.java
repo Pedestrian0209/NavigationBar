@@ -12,17 +12,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    BottomNavigationView navigationView;
+    ArrayList<IFragment> fragments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        final BottomNavigationView navigationView = findViewById(R.id.navigation);
-        List<IFragment> fragments = new ArrayList<>();
-        fragments.add(new FragmentA());
-        fragments.add(new FragmentB());
-        fragments.add(new FragmentC());
+        navigationView = findViewById(R.id.navigation);
+        fragments = new ArrayList<>();
+        if (savedInstanceState == null) {
+            fragments.add(new FragmentA());
+            fragments.add(new FragmentB());
+            fragments.add(new FragmentC());
+        } else {
+            FragmentA fragmentA = (FragmentA) getSupportFragmentManager().findFragmentByTag(FragmentA.class.getSimpleName());
+            if (fragmentA == null) {
+                fragmentA = new FragmentA();
+            }
+            FragmentB fragmentB = (FragmentB) getSupportFragmentManager().findFragmentByTag(FragmentB.class.getSimpleName());
+            if (fragmentB == null) {
+                fragmentB = new FragmentB();
+            }
+            FragmentC fragmentC = (FragmentC) getSupportFragmentManager().findFragmentByTag(FragmentC.class.getSimpleName());
+            if (fragmentC == null) {
+                fragmentC = new FragmentC();
+            }
+            fragments.add(fragmentA);
+            fragments.add(fragmentB);
+            fragments.add(fragmentC);
+        }
         navigationView.initFragments(getSupportFragmentManager(), R.id.container, fragments);
         navigationView.showTip(1, "你好");
         navigationView.showTipDot(2, true);
