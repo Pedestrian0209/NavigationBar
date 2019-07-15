@@ -39,12 +39,7 @@ public class FragmentC extends Fragment implements IFragment {
     }
 
     @Override
-    public boolean onInterceptClick() {
+    public boolean onInterceptClick(Context context) {
         return false;
-    }
-
-    @Override
-    public void onInterceptClickEvent(Context context) {
-
     }
 }

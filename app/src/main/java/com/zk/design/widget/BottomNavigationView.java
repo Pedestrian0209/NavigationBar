@@ -126,8 +126,7 @@ public class BottomNavigationView extends LinearLayout implements View.OnClickLi
         }
 
         //检测是否拦截点击事件
-        if (nextFragment.onInterceptClick()) {
-            nextFragment.onInterceptClickEvent(getContext());
+        if (nextFragment.onInterceptClick(getContext())) {
             return;
         }
 

@@ -41,10 +41,5 @@ public interface IFragment {
      *
      * @return
      */
-    boolean onInterceptClick();
-
-    /**
-     * 如果点击事件被拦截，则执行该方法，用于消费拦截事件
-     */
-    void onInterceptClickEvent(Context context);
+    boolean onInterceptClick(Context context);
 }

@@ -40,12 +40,8 @@ public class FragmentB extends Fragment implements IFragment {
     }
 
     @Override
-    public boolean onInterceptClick() {
-        return true;
-    }
-
-    @Override
-    public void onInterceptClickEvent(Context context) {
+    public boolean onInterceptClick(Context context) {
         Toast.makeText(context, "onInterceptClickEvent", Toast.LENGTH_SHORT).show();
+        return true;
     }
 }
