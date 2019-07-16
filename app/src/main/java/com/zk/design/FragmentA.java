@@ -12,11 +12,14 @@ import android.widget.Toast;
 
 import com.zk.design.fragment.IFragment;
 
-public class FragmentA extends Fragment implements IFragment {
+public class FragmentA extends Fragment implements IFragment, View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_a, container, false);
+        View view = inflater.inflate(R.layout.fragment_a, container, false);
+        view.findViewById(R.id.show).setOnClickListener(this);
+        view.findViewById(R.id.hide).setOnClickListener(this);
+        return view;
     }
 
     @Override
@@ -42,5 +45,17 @@ public class FragmentA extends Fragment implements IFragment {
     @Override
     public boolean onInterceptClick(Context context) {
         return false;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.show:
+                ((MainActivity)getActivity()).show();
+                break;
+            case R.id.hide:
+                ((MainActivity)getActivity()).hide();
+                break;
+        }
     }
 }

@@ -6,6 +6,8 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -57,6 +59,27 @@ public class BottomNavigationItemView extends View {
         tipBgColor = builder.tipBgColor;
         tipBgCornerRadius = builder.tipBgCornerRadius;
         tipDotRadius = builder.tipDotRadius;
+    }
+
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        Parcelable parcelable = super.onSaveInstanceState();
+        SavedState savedState = new SavedState(parcelable);
+        savedState.showTipDot = showTipDot ? 1 : 0;
+        savedState.tipMessage = tipMessage;
+        return savedState;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        if (!(state instanceof SavedState)) {
+            super.onRestoreInstanceState(state);
+            return;
+        }
+        SavedState savedState = (SavedState) state;
+        super.onRestoreInstanceState(savedState.getSuperState());
+        showTipDot(savedState.showTipDot == 1);
+        showTip(savedState.tipMessage);
     }
 
     public void setActive(boolean isActive) {
@@ -128,6 +151,40 @@ public class BottomNavigationItemView extends View {
             canvas.drawText(tipMessage, left + tipBgCornerRadius / 2,
                     top + tipBgCornerRadius - metrics.top / 2 - metrics.bottom / 2, paint);
         }
+    }
+
+    public static class SavedState extends BaseSavedState {
+        int showTipDot;
+        String tipMessage;
+
+        public SavedState(Parcel source) {
+            super(source);
+            showTipDot = source.readInt();
+            tipMessage = source.readString();
+        }
+
+        public SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeInt(showTipDot);
+            out.writeString(tipMessage);
+        }
+
+        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
+            @Override
+            public SavedState createFromParcel(Parcel source) {
+                return new SavedState(source);
+            }
+
+            @Override
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
     }
 
     public static class Builder {

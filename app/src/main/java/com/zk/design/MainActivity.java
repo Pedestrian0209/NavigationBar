@@ -43,15 +43,22 @@ public class MainActivity extends AppCompatActivity {
             fragments.add(fragmentC);
         }
         navigationView.initFragments(getSupportFragmentManager(), R.id.container, fragments);
-        navigationView.showTip(1, "你好");
-        navigationView.showTipDot(2, true);
-        new Handler().postDelayed(new Runnable() {
+        /*new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 navigationView.showTip(1, "100000");
                 navigationView.showTipDot(2, false);
             }
-        }, 3000);
+        }, 3000);*/
     }
 
+    public void show() {
+        navigationView.showTip(1, "你好");
+        navigationView.showTipDot(2, true);
+    }
+
+    public void hide() {
+        navigationView.showTip(1, "");
+        navigationView.showTipDot(2, false);
+    }
 }
